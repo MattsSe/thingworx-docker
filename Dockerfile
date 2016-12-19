@@ -1,5 +1,7 @@
 FROM phusion/baseimage
 
+MAINTAINER Jorge Claro <jmc.claro@gmail.com>
+
 RUN \
   echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
   add-apt-repository -y ppa:webupd8team/java && \
@@ -9,10 +11,9 @@ RUN \
   rm -rf /var/cache/oracle-jdk8-installer
 
 
-WORKDIR /data
-
 ENV JAVA_HOME /usr/lib/jvm/java-8-oracle
-
+ENV TZ Europe/Lisbon
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main" > /etc/apt/sources.list.d/pgdg.list
