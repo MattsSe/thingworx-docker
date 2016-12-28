@@ -64,19 +64,20 @@ RUN  mkdir -p "$CATALINA_HOME" \
 
 WORKDIR $CATALINA_HOME
 
-ENV TOMCAT_MAJOR 7
-ENV TOMCAT_VERSION 7.0.73
+ENV TOMCAT_MAJOR 8
+ENV TOMCAT_VERSION 8.0.33
 
-ENV TOMCAT_TGZ_URL http://www.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz
-
+ENV TOMCAT_TGZ_URL http://archive.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz
 
 RUN curl -SL $TOMCAT_TGZ_URL -o tomcat.tar.gz \
 && tar -xvf tomcat.tar.gz --strip-components=1 \
 && rm bin/*.bat \
 && rm tomcat.tar.gz*
 
-ENV JAVA_OPTS -Dserver -Dd64 -Xms1024m -Xmx5g -XX:+UseNUMA -XX:+UseConcMarkSweepGC
-ENV CATALINA_OPTS -Djava.net.preferIPv4Stack=true
+# -Xms1g Mininum Ram Memory
+# -Xmx5g Maximum Ram Memory
+ENV JAVA_OPTS -Dserver -Dd64 -XX:+UseNUMA -XX:+UseConcMarkSweepGC
+ENV CATALINA_OPTS -Djava.net.preferIPv4Stack=true -Xms1g -Xmx5g
 
 COPY build/tomcat-users.xml $CATALINA_HOME/conf/
 COPY build/Thingworx.war $CATALINA_HOME/webapps/
