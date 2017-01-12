@@ -1,5 +1,5 @@
 #! /bin/bash
-server=127.0.0.1
+server="localhost"
 port=5432
 database="thingworx"
 tablespace="thingworx"
@@ -54,6 +54,6 @@ echo Thingworx User=$thingworxusername
 echo Start
 psql -q -h $server -U $adminusername -p $port -v database=$database -v tablespace=$tablespace -v tablespace_location=$tablespace_location -v username=$thingworxusername<< EOF
 SET client_min_messages TO ERROR;
-\i /install/thingworx-database-setup.sql
+\i ./thingworx-database-setup.sql
 EOF
 echo End Execution

@@ -702,7 +702,9 @@ CREATE TABLE organization_model (
     type integer,
     "visibilityPermissions" text,
     "loginResetPassword" boolean,
-    "resetMailServer" character varying
+    "resetMailServer" character varying,
+    "resetMailSubject" character varying,
+    "resetMailContent" character varying
 );
 
 
@@ -1246,7 +1248,9 @@ CREATE TABLE user_model (
     tags character varying,
     "tenantId" character varying,
     type integer,
-    "visibilityPermissions" text
+    "visibilityPermissions" text,
+    "locked" boolean,
+    "lockedTime" timestamp without time zone
 );
 
 
@@ -1365,7 +1369,10 @@ CREATE TABLE file_transfer_job (
 	"endTime" bigint,
 	"targetRepository" text,
 	"user" text,
-	"isComplete" boolean
+	"isComplete" boolean,
+	"isQueueable" boolean,
+	"enqueueTime" bigint,
+	"enqueueCount" bigint
 );
 
 ALTER TABLE file_transfer_job OWNER TO :"user_name";

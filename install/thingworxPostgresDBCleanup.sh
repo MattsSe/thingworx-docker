@@ -44,6 +44,6 @@ echo Admin User=$adminusername
 echo Start
 psql -q -h $server -U $adminusername -p $port -v database=$database -v tablespace=$tablespace<< EOF
 SET client_min_messages TO ERROR;
-\i /install/thingworx-database-cleanup.sql
+\i ./thingworx-database-cleanup.sql
 EOF
 echo End Execution

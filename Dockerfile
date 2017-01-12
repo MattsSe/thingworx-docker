@@ -40,8 +40,9 @@ RUN chmod 755 /install/*
 RUN mkdir /ThingworxPostgresqlStorage \
  && chown postgres:postgres /ThingworxPostgresqlStorage
 
-
 USER postgres
+
+WORKDIR /install
 
 RUN    /etc/init.d/postgresql start \
 && sleep 20 \

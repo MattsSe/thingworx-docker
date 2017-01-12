@@ -1,5 +1,5 @@
 #! /bin/bash
-server=127.0.0.1
+server="localhost"
 database="thingworx"
 port=5432
 username="twadmin"
@@ -49,34 +49,34 @@ echo Start Execution
 
 if [ "$option" = "all" ]; then
 psql -q -h $server -U $username -d $database -p $port -v user_name=$username -v searchPath=$schema<< EOF
-\i /install/thingworx-model-schema.sql
-\i /install/thingworx-property-schema.sql
-\i /install/thingworx-data-schema.sql
+\i ./thingworx-model-schema.sql
+\i ./thingworx-property-schema.sql
+\i ./thingworx-data-schema.sql
 EOF
 fi
 
 if [ "$option" = "model" ]; then
 psql -q -h $server -U $username -d $database -p $port -v user_name=$username -v searchPath=$schema<< EOF
-\i /install/thingworx-model-schema.sql
+\i ./thingworx-model-schema.sql
 EOF
 fi
 
 if [ "$option" = "property" ]; then
 psql -q -h $server -U $username -d $database -p $port -v user_name=$username -v searchPath=$schema<< EOF
-\i /install/thingworx-property-schema.sql
+\i ./thingworx-property-schema.sql
 EOF
 fi
 
 if [ "$option" = "data" ]; then
 psql -q -h $server -U $username -d $database -p $port -v user_name=$username -v searchPath=$schema<< EOF
-\i /install/thingworx-data-schema.sql
+\i ./thingworx-data-schema.sql
 EOF
 fi
 
 if [ "$option" = "modelwithproperty" ]; then
 psql -q -h $server -U $username -d $database -p $port -v user_name=$username -v searchPath=$schema<< EOF
-\i /install/thingworx-model-schema.sql
-\i /install/thingworx-property-schema.sql
+\i ./thingworx-model-schema.sql
+\i ./thingworx-property-schema.sql
 EOF
 fi
 
