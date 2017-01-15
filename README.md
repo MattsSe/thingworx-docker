@@ -1,6 +1,6 @@
 # ThingWorx Docker Container
 
-ThingWorx is a plateform dedicated to design and run IoT/M2M applications.
+ThingWorx is a dedicated platform to design and run IoT/M2M applications.
 
 For more information: http://www.thingworx.com/
 
@@ -8,9 +8,10 @@ NOTE: ThingWorx is under licenced software.
 
 ## Setup
 
-Add your Thingworx.war file to the build folder. - Tested with TW v7.2.5 -
+Add your Thingworx.war file to the build folder and update the correspondent install files on the install folder. **Tested with v7.2.5**
 
 The Java, PostgresSQL database and Tomcat Server are already incluided as part of this container.
+For development only.
 
 ```
 docker build -t thingworx .
