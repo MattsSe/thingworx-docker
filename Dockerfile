@@ -93,7 +93,7 @@ RUN chmod 777 /launch.sh
 
 EXPOSE 5432 8080
 
-VOLUME  [/ThingworxPlatform", "/ThingworxStorage", "/ThingworxBackupStorage"]
+VOLUME  ["/ThingworxPlatform", "/ThingworxStorage", "/ThingworxBackupStorage"]
 
 ENTRYPOINT ["/launch.sh"]
 
