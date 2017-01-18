@@ -16,6 +16,7 @@ For development only.
 ```
 docker build -t thingworx .
 ```
+**NOTE:** The launch.sh file should not contain any **CRLF** line endings. The docker container will not run otherwise.
 
 ## Run It
 
