@@ -8,7 +8,7 @@ NOTE: ThingWorx is under licenced software.
 
 ## Setup
 
-Add your Thingworx.war file to the build folder and update the correspondent install files on the install folder. **Tested with v7.2.5**
+Add your Thingworx.war file to the build folder and update the correspondent sql files on the install folder. **Tested with v7.2.5**
 
 The Java, PostgresSQL database and Tomcat Server are already incluided as part of this container.
 For development only.
