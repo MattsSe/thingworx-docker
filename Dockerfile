@@ -45,7 +45,7 @@ USER postgres
 WORKDIR /install
 
 RUN    /etc/init.d/postgresql start \
-&& sleep 20 \
+&& sleep 30 \
 && /install/thingworxPostgresDBSetup.sh \
 && /install/thingworxPostgresSchemaSetup.sh \
 && /etc/init.d/postgresql stop
@@ -66,7 +66,7 @@ RUN  mkdir -p "$CATALINA_HOME" \
 WORKDIR $CATALINA_HOME
 
 ENV TOMCAT_MAJOR 8
-ENV TOMCAT_VERSION 8.0.33
+ENV TOMCAT_VERSION 8.0.38
 
 ENV TOMCAT_TGZ_URL http://archive.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz
 
@@ -78,7 +78,7 @@ RUN curl -SL $TOMCAT_TGZ_URL -o tomcat.tar.gz \
 # -Xms1g Mininum Ram Memory
 # -Xmx5g Maximum Ram Memory
 ENV JAVA_OPTS -Dserver -Dd64 -XX:+UseNUMA -XX:+UseConcMarkSweepGC
-ENV CATALINA_OPTS -Djava.net.preferIPv4Stack=true -Xms1g -Xmx5g
+ENV CATALINA_OPTS -Djava.net.preferIPv4Stack=true -Xms1g -Xmx2g -Djava.library.path=$CATALINA_HOME/webapps/Thingworx/WEB-INF/extensions
 
 COPY build/tomcat-users.xml $CATALINA_HOME/conf/
 COPY build/Thingworx.war $CATALINA_HOME/webapps/
@@ -86,7 +86,7 @@ COPY build/Thingworx.war $CATALINA_HOME/webapps/
 
 ENV THINGWORX_PLATFORM_SETTINGS /ThingworxPlatform
 COPY build/platform-settings.json /ThingworxPlatform
-
+COPY build/license.bin /ThingworxPlatform
 
 COPY launch.sh /
 RUN chmod 777 /launch.sh

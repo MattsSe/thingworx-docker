@@ -1332,6 +1332,63 @@ CREATE TABLE widget_model (
     "visibilityPermissions" text
 );
 
+--
+-- Name: notificationdefinition_model; Type: TABLE; Owner: :"user_name"; Tablespace: 
+--
+
+CREATE TABLE notificationdefinition_model (
+    avatar bytea,
+    "className" character varying,
+    "configurationChanges" character varying,
+    "configurationTables" text,
+    description character varying,
+    "designTimePermissions" text,
+    "documentationContent" character varying,
+    "contents" text,
+    "events" text,
+    "homeMashup" character varying,
+    "lastModifiedDate" timestamp without time zone,
+    name character varying NOT NULL,
+    owner text,
+    "projectName" character varying,
+    "recipients" text,
+    "runTimePermissions" text,
+    tags character varying,
+    "tenantId" character varying,
+    type integer,
+    "visibilityPermissions" text
+);
+
+ALTER TABLE notificationdefinition_model OWNER TO :"user_name";
+
+--
+-- Name: notificationcontent_model; Type: TABLE; Owner: :"user_name"; Tablespace: 
+--
+
+CREATE TABLE notificationcontent_model (
+    avatar bytea,
+    "className" character varying,
+    "configurationChanges" character varying,
+    "configurationTables" text,
+    description character varying,
+    "designTimePermissions" text,
+    "documentationContent" character varying,   
+    "handlerID" character varying,
+    "handlerEntity" character varying,
+    "homeMashup" character varying,
+    "lastModifiedDate" timestamp without time zone,
+    name character varying NOT NULL,
+    owner text,
+    "projectName" character varying,
+    "runTimePermissions" text,
+    tags character varying,
+    "tenantId" character varying,
+    type integer,
+    "visibilityPermissions" text
+);
+
+ALTER TABLE notificationcontent_model OWNER TO :"user_name";
+
 CREATE TABLE extensions (
 	"name" varchar PRIMARY KEY REFERENCES extensionpackage_model(name),
 	"resource" bytea NOT NULL,
@@ -1370,9 +1427,11 @@ CREATE TABLE file_transfer_job (
 	"targetRepository" text,
 	"user" text,
 	"isComplete" boolean,
+	"reservationId" text,
 	"isQueueable" boolean,
 	"enqueueTime" bigint,
-	"enqueueCount" bigint
+	"enqueueCount" bigint,
+	"metadata" jsonb
 );
 
 ALTER TABLE file_transfer_job OWNER TO :"user_name";
@@ -1380,10 +1439,64 @@ ALTER TABLE file_transfer_job OWNER TO :"user_name";
 ALTER TABLE ONLY file_transfer_job
     ADD CONSTRAINT file_transfer_job_pkey PRIMARY KEY (id);
 
+-- create table to support persistence of transfer job offline queue
+CREATE TABLE file_transfer_job_offline_queue (
+    "id" text NOT NULL,
+    "targetChecksum" text,
+    "code" integer,
+    "isAsync" boolean,
+    "maxSize" bigint,
+    "stagingDir" text,
+    "sourceFile" text,
+    "startPosition" numeric,
+    "timeout" bigint,
+    "isRestartEnabled" boolean,
+    "duration" bigint,
+    "targetFile" text,
+    "startTime" bigint,
+    "state" text,
+    "sourcePath" text,
+    "sourceRepository" text,
+    "blockCount" bigint,
+    "bytesTransferred" numeric,
+    "targetPath" text,
+    "sourceChecksum" text,
+    "transferId" text,
+    "message" text,
+    "blockSize" bigint,
+    "size" numeric,
+    "endTime" bigint,
+    "targetRepository" text,
+    "user" text,
+    "isComplete" boolean,
+    "isQueueable" boolean,
+    "enqueueTime" bigint,
+    "enqueueCount" bigint,
+    "metadata" jsonb,
+    "thingName" text NOT NULL
+);
+
+ALTER TABLE file_transfer_job_offline_queue OWNER TO :"user_name";
+
+ALTER TABLE ONLY file_transfer_job_offline_queue
+    ADD CONSTRAINT file_transfer_job_offline_queue_pkey PRIMARY KEY (id);
+
+-- create table to support persistence of transfer reservation information
+CREATE TABLE IF NOT EXISTS transfer_reservation (
+    "id" text NOT NULL,
+    "reservedBy" text,
+    "reservedAt" bigint
+);
+
+ALTER TABLE transfer_reservation OWNER TO :"user_name";
+
+ALTER TABLE ONLY transfer_reservation
+    ADD CONSTRAINT transfer_reservation_pkey PRIMARY KEY (id);
+
 CREATE TABLE system_ownership (
   id serial primary key,
   platform text, -- Arbitrary text describing the owning platform instance.
-  took_ownership timestamp default current_timestamp
+  took_ownership timestamp without time zone default current_timestamp
 );
 
 ALTER TABLE system_ownership OWNER TO :"user_name";
@@ -1694,6 +1807,19 @@ ALTER TABLE ONLY thingtemplate_model
 ALTER TABLE ONLY user_model
     ADD CONSTRAINT user_model_pkey PRIMARY KEY (name);
 
+--
+-- Name: notificationdefinition_model_pkey; Type: CONSTRAINT; Owner: :"user_name"; Tablespace: 
+--
+
+ALTER TABLE ONLY notificationdefinition_model
+    ADD CONSTRAINT notificationdefinition_model_pkey PRIMARY KEY (name);
+
+--
+-- Name: notificationcontent_model_pkey; Type: CONSTRAINT; Owner: :"user_name"; Tablespace: 
+--
+
+ALTER TABLE ONLY notificationcontent_model
+    ADD CONSTRAINT notificationcontent_model_pkey PRIMARY KEY (name);
 
 --
 -- Name: user_model_properties_pkey; Type: CONSTRAINT; Owner: :"user_name"; Tablespace: 
