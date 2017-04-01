@@ -1,6 +1,6 @@
 FROM phusion/baseimage
 
-MAINTAINER Jorge Claro <jmc.claro@gmail.com>
+LABEL maintainer "Jorge Claro <jmc.claro@gmail.com>"
 
 RUN \
   echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
