@@ -66,7 +66,7 @@ RUN  mkdir -p "$CATALINA_HOME" \
 WORKDIR $CATALINA_HOME
 
 ENV TOMCAT_MAJOR 8
-ENV TOMCAT_VERSION 8.0.38
+ENV TOMCAT_VERSION 8.0.43
 
 ENV TOMCAT_TGZ_URL http://archive.apache.org/dist/tomcat/tomcat-$TOMCAT_MAJOR/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz
 
@@ -96,7 +96,3 @@ EXPOSE 5432 8080
 VOLUME  ["/ThingworxStorage/logs", "/ThingworxStorage/repository"]
 
 ENTRYPOINT ["/launch.sh"]
-
-
-
-
